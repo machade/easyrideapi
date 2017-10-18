@@ -58,3 +58,6 @@ router.get('/local/:id?', (req, res) =>{
 router.get('/tipo_rota', (req, res) =>{
   execSQLQuery('SELECT * FROM tipo_rota', res);
 })
+router.get('/tipo_usuario', (req, res) =>{
+  execSQLQuery('SELECT * FROM tipo_usuario', res);
+})
