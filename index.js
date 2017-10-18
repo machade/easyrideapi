@@ -61,3 +61,6 @@ router.get('/tipo_rota', (req, res) =>{
 router.get('/tipo_usuario', (req, res) =>{
   execSQLQuery('SELECT * FROM tipo_usuario', res);
 })
+router.get('/universidade', (req, res) =>{
+  execSQLQuery('SELECT * FROM universidade', res);
+})
