@@ -49,9 +49,9 @@ function execSQLQuery(sqlQry, res){
 }
 
 
-router.get('/local/:id?', (req, res) =>{
+router.get('/local/1', (req, res) =>{
     let filter = '';
-    if(req.params.id) filter = ' WHERE ID_USUARIO=' + parseInt(req.params.id);
+    if(req.params.id) filter = ' WHERE ID_USUARIO= 1';
     execSQLQuery('SELECT * FROM local' + filter, res);
 })
 
@@ -66,7 +66,7 @@ router.get('/universidade', (req, res) =>{
 })
 
 router.post('/rota/novo', (req, res) =>{
-  var sql = "INSERT INTO Rota (tipoRota,  hora,  qtdeLugares,  localPartida) VALUES ("+req.body.tipoRota+
+  var sql = "INSERT INTO Rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao) VALUES (1,"+req.body.tipoRota+
                                                                                       ","+req.body.hora+
                                                                                       ","+req.body.qtdeLugares+
                                                                                       ","+req.body.localPartida+")";
