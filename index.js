@@ -49,7 +49,7 @@ function execSQLQuery(sqlQry, res){
 }
 
 
-router.get('/local/1', (req, res) =>{
+router.get('/origem', (req, res) =>{
     let filter = '';
     if(req.params.id) filter = ' WHERE ID_USUARIO= 1';
     execSQLQuery('SELECT * FROM local' + filter, res);
