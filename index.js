@@ -64,3 +64,12 @@ router.get('/tipo_usuario', (req, res) =>{
 router.get('/universidade', (req, res) =>{
   execSQLQuery('SELECT * FROM universidade', res);
 })
+
+router.post('/rota/novo', (req, res) =>{
+  var sql = "INSERT INTO Rota (tipoRota,  hora,  qtdeLugares,  localPartida) VALUES ("+req.body.tipoRota+
+                                                                                      ","+req.body.hora+
+                                                                                      ","+req.body.qtdeLugares+
+                                                                                      ","+req.body.localPartida+")";
+  execSQLQuery(sql,res);
+})
+
