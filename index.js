@@ -75,9 +75,10 @@ router.post('/rota/novo', (req, res) =>{
 
 
 router.post('/local/novo', (req, res) =>{
-  var sql = "INSERT INTO local (descricao, localizacao, id_universidade, id_usuario) VALUES ("+req.body.descricao+
-                                                                                             ","+req.body.localizacao+
-                                                                                             ", null, 1)";
+  const localizacao = "ST_GeomFromText('point("+req.body.localizacao+")')";
+  var sql = 'INSERT INTO local (descricao, localizacao, id_universidade, id_usuario) VALUES ("'+req.body.descricao+
+                                                                                             '",'+localizacao+
+                                                                                             ', null, 1)';
   execSQLQuery(sql,res);
 })
 
