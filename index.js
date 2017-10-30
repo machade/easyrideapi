@@ -50,9 +50,10 @@ function execSQLQuery(sqlQry, res){
 
 
 router.get('/dest_universidade', (req, res) =>{
-    let filter = '';
-    if(req.params.id) filter = ' WHERE ID_USUARIO= 1';
-    execSQLQuery('SELECT * FROM local' + filter, res);
+    execSQLQuery('SELECT * FROM local WHERE ID_USUARIO= 1', res);
+})
+router.get('/dest_usuario', (req, res) =>{
+  execSQLQuery('SELECT * FROM local WHERE ID_USUARIO= 2', res);
 })
 
 router.get('/tipo_rota', (req, res) =>{
