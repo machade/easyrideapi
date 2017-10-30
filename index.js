@@ -66,18 +66,19 @@ router.get('/universidade', (req, res) =>{
 })
 
 router.post('/rota/novo', (req, res) =>{
-  var sql = "INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao) VALUES (1,"+req.body.tipoRota+
-                                                                                      ","+req.body.hora+
-                                                                                      ","+req.body.qtdeLugares+
-                                                                                      ","+req.body.localPartida+")";
+  var sql = 'INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao) VALUES (1,'+req.body.tipoRota+
+                                                                                      ','+req.body.hora+
+                                                                                      ','+req.body.qtdeLugares+
+                                                                                      ','+req.body.localPartida+')';
   execSQLQuery(sql,res);
 })
 
 
 router.post('/local/novo', (req, res) =>{
-  var sql = "INSERT INTO local (descricao, localizacao, id_universidade, id_usuario) VALUES ("+req.body.descricao+
-                                                                                             ",GeomFromText(point("+req.body.localizacao+"))"+
-                                                                                             ", null, 1)";
+  console.log('post-local')
+  var sql = 'INSERT INTO local (descricao, localizacao, id_universidade, id_usuario) VALUES ("'+req.body.descricao+
+                                                                                             '",point('+req.body.localizacao+')'+
+                                                                                             ', null, 1)';
   execSQLQuery(sql,res);
 })
 
