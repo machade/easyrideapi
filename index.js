@@ -50,9 +50,10 @@ function execSQLQuery(sqlQry, res){
 
 
 router.get('/dest_universidade', (req, res) =>{
-    let filter = '';
-    if(req.params.id) filter = ' WHERE ID_USUARIO= 1';
-    execSQLQuery('SELECT * FROM local' + filter, res);
+    execSQLQuery('SELECT * FROM local WHERE ID_USUARIO= 1', res);
+})
+router.get('/dest_usuario', (req, res) =>{
+  execSQLQuery('SELECT * FROM local WHERE ID_USUARIO= 2', res);
 })
 
 router.get('/tipo_rota', (req, res) =>{
@@ -66,18 +67,18 @@ router.get('/universidade', (req, res) =>{
 })
 
 router.post('/rota/novo', (req, res) =>{
-  var sql = "INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao) VALUES (1,"+req.body.tipoRota+
-                                                                                      ","+req.body.hora+
-                                                                                      ","+req.body.qtdeLugares+
-                                                                                      ","+req.body.localPartida+")";
+  var sql = 'INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao) VALUES (1,'+req.body.tipoRota+
+                                                                                      ','+req.body.hora+
+                                                                                      ','+req.body.qtdeLugares+
+                                                                                      ','+req.body.localPartida+')';
   execSQLQuery(sql,res);
 })
 
 
 router.post('/local/novo', (req, res) =>{
-  const localizacao = "ST_GeomFromText('point("+req.body.localizacao+")')";
+  console.log('post-local')
   var sql = 'INSERT INTO local (descricao, localizacao, id_universidade, id_usuario) VALUES ("'+req.body.descricao+
-                                                                                             '",'+localizacao+
+                                                                                             '",point('+req.body.localizacao+')'+
                                                                                              ', null, 1)';
   execSQLQuery(sql,res);
 })
