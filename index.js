@@ -75,32 +75,7 @@ router.get('/listarRota', (req, res) =>{
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
             'where rota.id_usuario = 2';
-  lista=[
-    {
-      id:'2',
-      id_usuario:'2',
-      id_TipoRota:'1',
-      descricao_tipoRota:'Ida',
-      id_origem:'6',
-      descricao_origem:'Casa',
-      id_destino:'1',
-      descricao_destino:'Uniso - Universitária',
-      qtdelugar:'3',
-      previsao:'17:40:00'
-    },
-    {
-      id:'3',
-      id_usuario:'2',
-      id_TipoRota:'1',
-      descricao_tipoRota:'Ida',
-      id_origem:'6',
-      descricao_origem:'Trabalho',
-      id_destino:'1',
-      descricao_destino:'Uniso - trujilo',
-      qtdelugar:'3',
-      previsao:'18:20:00'
-    }
-  ];
+
   execSQLQuery(sql, res);
 })
 
