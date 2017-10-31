@@ -41,8 +41,10 @@ function execSQLQuery(sqlQry, res){
   connection.query(sqlQry, function(error, results, fields){
       if(error) 
         res.json(error);
-      else
+      else {
         res.json(results);
+      }
+        
       connection.end();
       console.log('executou!');
   });
@@ -66,20 +68,71 @@ router.get('/universidade', (req, res) =>{
   execSQLQuery('SELECT * FROM universidade', res);
 })
 
+router.get('/listarRota', (req, res) =>{
+  var sql = 'SELECT rota.id, rota.id_usuario, id_TipoRota, tr.descricao as descricao_tipoRota, id_origem, lo.descricao as descricao_origem, id_destino, '+
+            'ld.descricao as descricao_destino, qtdelugar, previsao FROM rota '+
+            'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
+            'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
+            'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
+            'where rota.id_usuario = 2';
+  lista=[
+    {
+      id:'2',
+      id_usuario:'2',
+      id_TipoRota:'1',
+      descricao_tipoRota:'Ida',
+      id_origem:'6',
+      descricao_origem:'Casa',
+      id_destino:'1',
+      descricao_destino:'Uniso - Universitária',
+      qtdelugar:'3',
+      previsao:'17:40:00'
+    },
+    {
+      id:'3',
+      id_usuario:'2',
+      id_TipoRota:'1',
+      descricao_tipoRota:'Ida',
+      id_origem:'6',
+      descricao_origem:'Trabalho',
+      id_destino:'1',
+      descricao_destino:'Uniso - trujilo',
+      qtdelugar:'3',
+      previsao:'18:20:00'
+    }
+  ];
+  execSQLQuery(sql, res);
+})
+
 router.post('/rota/novo', (req, res) =>{
-  var sql = 'INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao) VALUES (1,'+req.body.tipoRota+
-                                                                                      ','+req.body.hora+
-                                                                                      ','+req.body.qtdeLugares+
-                                                                                      ','+req.body.localPartida+')';
+  var sql = 'INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao) VALUES (2,'+req.body.tipoRota+                                                                                    
+                                                                                                            ','+req.body.origem+
+                                                                                                            ','+req.body.destino+
+                                                                                                            ','+req.body.qtdeLugares+
+                                                                                                            ',"'+req.body.previsao+':00")';
   execSQLQuery(sql,res);
 })
 
 
 router.post('/local/novo', (req, res) =>{
-  console.log('post-local')
   var sql = 'INSERT INTO local (descricao, localizacao, id_universidade, id_usuario) VALUES ("'+req.body.descricao+
                                                                                              '",point('+req.body.localizacao+')'+
-                                                                                             ', null, 1)';
+                                                                                             ', null, 2)';
   execSQLQuery(sql,res);
 })
 
+router.put('/rota/update', (req, res) =>{
+  console.log('atualizar',req.body);
+  var sql = 'UPDATE rota  SET id_TipoRota='+req.body.tipoRota+
+                            ', id_origem='+req.body.origem+
+                            ', id_destino='+req.body.destino+
+                            ', qtdelugar='+req.body.qtdeLugares+
+                            ', previsao ="'+req.body.previsao+'"'+
+                            ' WHERE id='+req.body.id;
+  execSQLQuery(sql,res);
+})
+
+router.delete('/rota/delete/:id',(req,res)=>{
+  var sql = 'Delete from rota where id = '+ req.params.id;
+  execSQLQuery(sql,res);
+})
