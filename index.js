@@ -85,22 +85,22 @@ router.get('/listarRota', (req, res) =>{
 
 router.get('/ListaCaronas',( req,res) => {
   var sql = 'SELECT rota.id, rota.id_usuario,usu.nome, id_TipoRota, tr.descricao as descricao_tipoRota, '+
-            'id_origem, lo.descricao as descricao_origem,lo.descricao as origem, id_destino, '+
+            'id_origem, lo.descricao as descricao_origem,lo.descricao as origem, id_destino, lo.localizacao, '+
             'ld.descricao as descricao_destino,ld.descricao as destino,qtdelugar, previsao, distancia '+
             'FROM easyride.rota INNER JOIN usuario as usu ON usu.id = rota.id_usuario '+
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
-            'where rota.id_usuario = 2';
+            'where rota.id_usuario = 2 ';
   execSQLQuery(sql,res);
 })
 
 router.post('/rota/novo', (req, res) =>{
-  var sql = 'INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao) VALUES (2,'+req.body.tipoRota+                                                                                    
+  var sql = 'INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao, distancia) VALUES (2,'+req.body.tipoRota+                                                                                    
                                                                                                             ','+req.body.origem+
                                                                                                             ','+req.body.destino+
                                                                                                             ','+req.body.qtdeLugares+
-                                                                                                            ',"'+req.body.previsao+':00")';
+                                                                                                            ',"'+req.body.previsao+'", 100)';
   execSQLQuery(sql,res);
 })
 
@@ -113,7 +113,6 @@ router.post('/local/novo', (req, res) =>{
 })
 
 router.put('/rota/update', (req, res) =>{
-  console.log('atualizar',req.body);
   var sql = 'UPDATE rota  SET id_TipoRota='+req.body.tipoRota+
                             ', id_origem='+req.body.origem+
                             ', id_destino='+req.body.destino+
