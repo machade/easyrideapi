@@ -68,6 +68,10 @@ router.get('/universidade', (req, res) =>{
   execSQLQuery('SELECT * FROM universidade', res);
 })
 
+router.get('/localizacao/:id', (req, res) =>{
+  execSQLQuery('SELECT x(localizacao),y(localizacao) FROM local where id='+req.body.id, res);
+})
+
 router.get('/listarRota', (req, res) =>{
   var sql = 'SELECT rota.id, rota.id_usuario, id_TipoRota, tr.descricao as descricao_tipoRota, id_origem, lo.descricao as descricao_origem, id_destino, '+
             'ld.descricao as descricao_destino, qtdelugar, previsao FROM rota '+
