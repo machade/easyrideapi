@@ -50,7 +50,7 @@ function execSQLQuery(sqlQry, res){
   });
 }
 
-
+// GET ------------------------------------------------------
 router.get('/dest_universidade', (req, res) =>{
     execSQLQuery('SELECT * FROM local WHERE ID_USUARIO= 1', res);
 })
@@ -85,8 +85,8 @@ router.get('/listarRota', (req, res) =>{
 
 router.get('/ListaCaronas/:destino&&:hora1&&:hora2',( req,res) => {
   var sql = 'SELECT rota.id, rota.id_usuario,usu.nome, id_TipoRota, tr.descricao as descricao_tipoRota, '+
-            'id_origem, lo.descricao as descricao_origem,lo.descricao as origem, id_destino, lo.localizacao, '+
-            'ld.descricao as descricao_destino,ld.descricao as destino,qtdelugar, previsao, distancia '+
+            'id_origem, lo.descricao as origem, lo.localizacao, id_destino, '+
+            'ld.descricao as destino,qtdelugar, previsao, distancia '+
             'FROM easyride.rota INNER JOIN usuario as usu ON usu.id = rota.id_usuario '+
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
@@ -98,6 +98,8 @@ router.get('/ListaCaronas/:destino&&:hora1&&:hora2',( req,res) => {
   execSQLQuery(sql,res);
 })
 
+
+//POST------------------------------------------------------
 router.post('/rota/novo', (req, res) =>{
   var sql = 'INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao, distancia) VALUES (2,'+req.body.tipoRota+                                                                                    
                                                                                                             ','+req.body.origem+
@@ -116,6 +118,8 @@ router.post('/local/novo', (req, res) =>{
   execSQLQuery(sql,res);
 })
 
+
+//PUt------------------------------------------------------
 router.put('/rota/update', (req, res) =>{
   var sql = 'UPDATE rota  SET id_TipoRota='+req.body.tipoRota+
                             ', id_origem='+req.body.origem+
@@ -127,6 +131,8 @@ router.put('/rota/update', (req, res) =>{
   execSQLQuery(sql,res);
 })
 
+
+//DELETE ------------------------------------------------------
 router.delete('/rota/delete/:id',(req,res)=>{
   var sql = 'Delete from rota where id = '+ req.params.id;
   execSQLQuery(sql,res);
