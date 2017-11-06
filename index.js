@@ -74,7 +74,7 @@ router.get('/localizacao/:id', (req, res) =>{
 
 router.get('/listarRota', (req, res) =>{
   var sql = 'SELECT rota.id, rota.id_usuario, id_TipoRota, tr.descricao as descricao_tipoRota, id_origem, lo.descricao as descricao_origem, id_destino, '+
-            'ld.descricao as descricao_destino, qtdelugar, previsao FROM rota '+
+            'ld.descricao as descricao_destino, qtdelugar, previsao, distancia FROM rota '+
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
@@ -103,7 +103,8 @@ router.post('/rota/novo', (req, res) =>{
                                                                                                             ','+req.body.origem+
                                                                                                             ','+req.body.destino+
                                                                                                             ','+req.body.qtdeLugares+
-                                                                                                            ',"'+req.body.previsao+'", 100)';
+                                                                                                            ',"'+req.body.previsao+
+                                                                                                            '",'+req.body.distancia+')';
   execSQLQuery(sql,res);
 })
 
@@ -121,6 +122,7 @@ router.put('/rota/update', (req, res) =>{
                             ', id_destino='+req.body.destino+
                             ', qtdelugar='+req.body.qtdeLugares+
                             ', previsao ="'+req.body.previsao+'"'+
+                            ', distancia ='+req.body.distancia+
                             ' WHERE id='+req.body.id;
   execSQLQuery(sql,res);
 })
