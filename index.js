@@ -83,7 +83,7 @@ router.get('/listarRota', (req, res) =>{
   execSQLQuery(sql, res);
 })
 
-router.get('/ListaCaronas',( req,res) => {
+router.get('/ListaCaronas/:destino&&:hora1&&:hora2',( req,res) => {
   var sql = 'SELECT rota.id, rota.id_usuario,usu.nome, id_TipoRota, tr.descricao as descricao_tipoRota, '+
             'id_origem, lo.descricao as descricao_origem,lo.descricao as origem, id_destino, lo.localizacao, '+
             'ld.descricao as descricao_destino,ld.descricao as destino,qtdelugar, previsao, distancia '+
@@ -91,7 +91,10 @@ router.get('/ListaCaronas',( req,res) => {
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
-            'where rota.id_usuario = 2 ';
+            'where rota.id_usuario = 2 and '+
+            'id_destino = '+ req.params.destino+
+            ' and previsao >= "'+req.params.hora1+
+            '" and previsao <= "'+ req.params.hora2+'"';
   execSQLQuery(sql,res);
 })
 
