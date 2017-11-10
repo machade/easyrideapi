@@ -72,7 +72,7 @@ router.get('/localizacao/:id', (req, res) =>{
   execSQLQuery('SELECT x(localizacao),y(localizacao) FROM local where id='+req.body.id, res);
 })
 
-router.get('/caronas/:id', (req, res) =>{
+router.get('/caronas/:userID', (req, res) =>{
   execSQLQuery('SELECT carona.id, carona.id_usuario,usu.nome, carona.id_rota, ro.id_usuario as CriadorRota, '+ 
               'carona.id_local, lc.localizacao as LocalCarona, carona.status, '+
              ' ro.id_TipoRota,  '+
@@ -83,7 +83,7 @@ router.get('/caronas/:id', (req, res) =>{
               'INNER JOIN easyride.local AS lc ON carona.id_local = lc.id '+
               'INNER JOIN easyride.local AS lo ON ro.id_origem = lo.id '+
               'INNER JOIN easyride.local AS ld ON ro.id_destino = ld.id '+
-              'where ro.id_usuario = '+ req.params.id, res);
+              'where ro.id_usuario = '+ req.params.userID, res);
 })
 
 router.get('/listarRota', (req, res) =>{
