@@ -54,6 +54,14 @@ function execSQLQuery(sqlQry, res){
 router.get('/dest_universidade', (req, res) =>{
     execSQLQuery('SELECT * FROM local WHERE ID_USUARIO= 1', res);
 })
+
+router.get('/disponibilidade/:id_rota', (req, res) =>{
+  execSQLQuery('Select count(*) as ocupadas,ro.qtdelugar From easyride.carona '+ 
+              'Inner Join rota as ro On ro.id = carona.id_rota '+
+              'where carona.status = 1 and ' +
+              'ro.id = ' + req.params.id_rota, res);
+})
+
 router.get('/dest_usuario', (req, res) =>{
   execSQLQuery('SELECT * FROM local WHERE ID_USUARIO= 2', res);
 })
@@ -83,7 +91,7 @@ router.get('/caronas/:userID', (req, res) =>{
               'INNER JOIN easyride.local AS lc ON carona.id_local = lc.id '+
               'INNER JOIN easyride.local AS lo ON ro.id_origem = lo.id '+
               'INNER JOIN easyride.local AS ld ON ro.id_destino = ld.id '+
-              'where ro.id_usuario = '+ req.params.userID, res);
+              'where status = 0 and ro.id_usuario = '+ req.params.userID, res);
 })
 
 router.get('/listarRota', (req, res) =>{
@@ -151,7 +159,20 @@ router.post('/local/novo', (req, res) =>{
 })
 
 
+router.post('/carona/novo', (req, res) =>{
+  var sql = 'INSERT INTO carona (id_usuario, id_rota, id_local, status) VALUES ('+req.body.id_usuario+
+                                                                      ', '+req.body.id_rota+
+                                                                      ', '+req.body.id_local+', 0)';
+  execSQLQuery(sql,res);
+})
+
 //PUT------------------------------------------------------
+router.put('/carona/update', (req, res) =>{
+  var sql = 'UPDATE carona  SET status = 1'+
+                            ' WHERE id='+req.body.id;
+  execSQLQuery(sql,res);
+})
+
 router.put('/rota/update', (req, res) =>{
   var sql = 'UPDATE rota  SET id_TipoRota='+req.body.tipoRota+
                             ', id_origem='+req.body.origem+
@@ -163,14 +184,13 @@ router.put('/rota/update', (req, res) =>{
   execSQLQuery(sql,res);
 })
 
-router.post('/carona/novo', (req, res) =>{
-  var sql = 'INSERT INTO carona (id_usuario, id_rota, id_local, status) VALUES ('+req.body.id_usuario+
-                                                                      ', '+req.body.id_rota+
-                                                                      ', '+req.body.id_local+', 0)';
-  execSQLQuery(sql,res);
-})
 //DELETE ------------------------------------------------------
 router.delete('/rota/delete/:id',(req,res)=>{
   var sql = 'Delete from rota where id = '+ req.params.id;
+  execSQLQuery(sql,res);
+})
+
+router.delete('/carona/delete/:id',(req,res)=>{
+  var sql = 'Delete from carona where id = '+ req.params.id;
   execSQLQuery(sql,res);
 })
