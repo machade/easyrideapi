@@ -24,7 +24,7 @@ router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
 app.use('/', router);
 
 //inicia o servidor
-app.listen(process.env.PORT || PORT);
+app.listen(port);
 console.log('API funcionando!');
 
 
@@ -100,7 +100,7 @@ router.get('/listarRota', (req, res) =>{
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
-            'where rota.id_usuario = 3 and dataCriacao = "12-11-2017"';
+            'where rota.id_usuario = 3';
 
   execSQLQuery(sql, res);
 })
