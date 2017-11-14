@@ -24,7 +24,7 @@ router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
 app.use('/', router);
 
 //inicia o servidor
-app.listen(port);
+app.listen(process.env.PORT || PORT);
 console.log('API funcionando!');
 
 
