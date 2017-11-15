@@ -49,7 +49,6 @@ function execSQLQuery(sqlQry, res){
   });
 }
 
-router.post('/login',login)
 
 
 login = function(req,res){
@@ -87,6 +86,9 @@ login = function(req,res){
   }
   });
 }
+
+
+router.post('/login',login)
 // GET ------------------------------------------------------
 router.get('/dest_universidade', (req, res) =>{
     execSQLQuery('SELECT * FROM local WHERE ID_USUARIO= 1', res);
