@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const port = 3000; //porta padrão
 const mysql = require('mysql');
 const cors = require('cors');
-var login = require('./login')
 
 app.use(cors());
 //configurando o body parser para pegar POSTS mais tarde
