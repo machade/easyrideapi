@@ -1,9 +1,12 @@
+import { exec } from 'child_process';
+
 const express = require('express');
 const app = express();         
 const bodyParser = require('body-parser');
 const port = 3000; //porta padrão
 const mysql = require('mysql');
 const cors = require('cors');
+var login = require('./login')
 
 app.use(cors());
 //configurando o body parser para pegar POSTS mais tarde
@@ -52,42 +55,7 @@ function execSQLQuery(sqlQry, res){
   });
 }
 
-
-router.post('/login',( req,res) => {
-  var email= req.body.email;
-  var password = req.body.password;
-  connection.query('SELECT * FROM usuario WHERE email = fubano@hotmail.com', function (error, results, fields) {
-  if (error) {
-    // console.log("error ocurred",error);
-    res.send({
-      "code":400,
-      "failed":"error ocurred"
-    })
-  }else{
-    // console.log('The solution is: ', results);
-    if(results.length > 0){
-      if([0].senha == password){
-        res.send({
-          "code":200,
-          "success":"login sucessfull"
-            });
-      }
-      else{
-        res.send({
-          "code":204,
-          "success":"Email and password does not match"
-            });
-      }
-    }
-    else{
-      res.send({
-        "code":204,
-        "success":"Email does not exits"
-          });
-    }
-  }
-  });
-})
+router.post('/login', login.login)
 
 // GET ------------------------------------------------------
 router.get('/dest_universidade', (req, res) =>{
