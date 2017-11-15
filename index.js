@@ -56,7 +56,7 @@ function execSQLQuery(sqlQry, res){
 router.post('/login',( req,res) => {
   var email= req.body.email;
   var password = req.body.password;
-  connection.execSQLQuerys('SELECT * FROM usuario WHERE email = ?',[email], function (error, results, fields) {
+  connection.query('SELECT * FROM usuario WHERE email = fubano@hotmail.com', function (error, results, fields) {
   if (error) {
     // console.log("error ocurred",error);
     res.send({
