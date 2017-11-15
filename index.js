@@ -53,10 +53,10 @@ function execSQLQuery(sqlQry, res){
 }
 
 
-router.post('/Login',( req,res) => {
+router.post('/login',( req,res) => {
   var email= req.body.email;
   var password = req.body.password;
-  connection.query('SELECT * FROM users WHERE email = ?',[email], function (error, results, fields) {
+  connection.query('SELECT * FROM usuario WHERE email = ?',[email], function (error, results, fields) {
   if (error) {
     // console.log("error ocurred",error);
     res.send({
@@ -65,8 +65,8 @@ router.post('/Login',( req,res) => {
     })
   }else{
     // console.log('The solution is: ', results);
-    if(results.length >0){
-      if([0].password == password){
+    if(results.length > 0){
+      if([0].senha == password){
         res.send({
           "code":200,
           "success":"login sucessfull"
