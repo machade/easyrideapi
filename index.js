@@ -53,7 +53,7 @@ function execSQLQuery(sqlQry, res){
 }
 
 
-router.POST('/Login',( req,res) => {
+router.post('/Login',( req,res) => {
   var email= req.body.email;
   var password = req.body.password;
   connection.query('SELECT * FROM users WHERE email = ?',[email], function (error, results, fields) {
