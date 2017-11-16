@@ -58,29 +58,29 @@ login = function(req,res){
   connection.query('SELECT * FROM usuario WHERE email = ?',[email], function (error, results, fields) {
   if (error) {
     // console.log("error ocurred",error);
-    res.send({
-      "code":400,
+    res.status(400).send({
       "failed":"error ocurred"
     })
   }else{
     // console.log('The solution is: ', results);
     if(results.length >0){
       if(results[0].senha == password){
-        res.send({
-          "code":200,
+        res.status(200).send({
+          "id": results[0].id,
+          "nome": results[0].nome,
+          "email": results[0].email,
+          "id_tipo": results[0].id_tipo,
           "success":"login sucessfull"
             });
       }
       else{
-        res.send({
-          "code":204,
+        res.status(204).send({
           "success":"Email and password does not match"
             });
       }
     }
     else{
-      res.send({
-        "code":204,
+      res.status(204).send({
         "success":"Email does not exits"
           });
     }
