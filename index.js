@@ -23,7 +23,7 @@ router.get('/', (req, res) => res.json({ message: 'Funcionando!' }));
 app.use('/', router);
 
 //inicia o servidor
-app.listen(process.env.PORT || PORT);
+app.listen(process.env.PORT || port);
 // app.listen(port);
 console.log('API funcionando!');
 
@@ -65,7 +65,7 @@ login = function(req,res){
   }else{
     // console.log('The solution is: ', results);
     if(results.length >0){
-      if([0].password == password){
+      if(results[0].senha == password){
         res.send({
           "code":200,
           "success":"login sucessfull"
