@@ -10,11 +10,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const connection = mysql.createConnection({
-  host     : 'sql10.freesqldatabase.com',
+  host     : 'localhost',
   port     : 3306,
-  user     : 'sql10204309',
-  password : 'YL2Hu2w9F5',
-  database : 'sql10204309'
+  user     : 'root',
+  password : 'mathe147',
+  database : 'easyride'
 });
 
 //definindo as rotas
@@ -32,11 +32,11 @@ console.log('API funcionando!');
 
 function execSQLQuery(sqlQry, res){
   const connection = mysql.createConnection({
-    host     : 'sql10.freesqldatabase.com',
+    host     : 'localhost',
     port     : 3306,
-    user     : 'sql10204309',
-    password : 'YL2Hu2w9F5',
-    database : 'sql10204309'
+    user     : 'root',
+    password : 'mathe147',
+    database : 'easyride'
   });
   connection.query(sqlQry, function(error, results, fields){
       if(error) 
@@ -66,17 +66,14 @@ login = function(req,res){
     if(results.length >0){
       if(results[0].senha == password){
         res.status(200).send({
-          "id": results[0].id,
-          "nome": results[0].nome,
-          "email": results[0].email,
-          "id_tipo": results[0].id_tipo,
+          "resultado": results[0],
           "success":"login sucessfull"
             });
       }
       else{
         res.status(204).send({
           "success":"Email and password does not match"
-            });
+          });
       }
     }
     else{
@@ -90,6 +87,7 @@ login = function(req,res){
 
 
 router.post('/login',login)
+
 // GET ------------------------------------------------------
 router.get('/dest_universidade', (req, res) =>{
     execSQLQuery('SELECT * FROM local WHERE ID_USUARIO= 1', res);
