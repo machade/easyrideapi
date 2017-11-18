@@ -10,11 +10,16 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const connection = mysql.createConnection({
-  host     : 'localhost',
+  // host     : 'localhost',
+  // port     : 3306,
+  // user     : 'root',
+  // password : 'mathe147',
+  // database : 'easyride'
+  host     : 'sql10.freesqldatabase.com',
   port     : 3306,
-  user     : 'root',
-  password : 'mathe147',
-  database : 'easyride'
+  user     : 'sql10205490',
+  password : 'G6nacQBga6',
+  database : 'sql10205490'
 });
 
 //definindo as rotas
@@ -32,11 +37,16 @@ console.log('API funcionando!');
 
 function execSQLQuery(sqlQry, res){
   const connection = mysql.createConnection({
-    host     : 'localhost',
+    // host     : 'localhost',
+    // port     : 3306,
+    // user     : 'root',
+    // password : 'mathe147',
+    // database : 'easyride'
+    host     : 'sql10.freesqldatabase.com',
     port     : 3306,
-    user     : 'root',
-    password : 'mathe147',
-    database : 'easyride'
+    user     : 'sql10205490',
+    password : 'G6nacQBga6',
+    database : 'sql10205490'
   });
   connection.query(sqlQry, function(error, results, fields){
       if(error) 
