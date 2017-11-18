@@ -162,7 +162,7 @@ router.get('/ListaCaronasIda/:destino&&:hora1&&:hora2&&:dateString&&:userID',( r
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
-            'where rota.id_usuario <> '+ req.params.userID +' and'+
+            'where rota.id_usuario <> '+ req.params.userID +' and '+
             'id_destino = '+ req.params.destino+
             ' and previsao >= "'+req.params.hora1+
             '" and previsao <= "'+ req.params.hora2+
@@ -178,7 +178,7 @@ router.get('/ListaCaronasVolta/:destino&&:hora1&&:hora2&&:dateString&&:userID',(
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
-            'where rota.id_usuario <> '+ req.params.userID +' and'+
+            'where rota.id_usuario <> '+ req.params.userID +' and '+
             'id_origem = '+ req.params.destino+
             ' and previsao >= "'+req.params.hora1+
             '" and previsao <= "'+ req.params.hora2+
