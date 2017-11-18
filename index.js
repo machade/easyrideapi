@@ -153,7 +153,7 @@ router.get('/listarRota/:userID', (req, res) =>{
   execSQLQuery(sql, res);
 })
 
-router.get('/ListaCaronasIda/:destino&&:hora1&&:hora2&&:dateString',( req,res) => {
+router.get('/ListaCaronasIda/:destino&&:hora1&&:hora2&&:dateString&&:userID',( req,res) => {
   var sql = 'SELECT rota.id, rota.id_usuario,usu.nome, id_TipoRota, tr.descricao as descricao_tipoRota, '+
             'id_origem, lo.descricao as origem, lo.localizacao, id_destino, '+
             'ld.descricao as destino,qtdelugar, previsao, distancia '+
@@ -162,7 +162,7 @@ router.get('/ListaCaronasIda/:destino&&:hora1&&:hora2&&:dateString',( req,res) =
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
-            'where rota.id_usuario <> 1 and '+
+            'where rota.id_usuario <> '+ req.params.userID +' and'+
             'id_destino = '+ req.params.destino+
             ' and previsao >= "'+req.params.hora1+
             '" and previsao <= "'+ req.params.hora2+
@@ -170,7 +170,7 @@ router.get('/ListaCaronasIda/:destino&&:hora1&&:hora2&&:dateString',( req,res) =
   execSQLQuery(sql,res);
 })
 
-router.get('/ListaCaronasVolta/:destino&&:hora1&&:hora2&&:dateString',( req,res) => {
+router.get('/ListaCaronasVolta/:destino&&:hora1&&:hora2&&:dateString&&:userID',( req,res) => {
   var sql = 'SELECT rota.id, rota.id_usuario,usu.nome, id_TipoRota, tr.descricao as descricao_tipoRota, '+
             'id_origem, lo.descricao as origem, id_destino, '+
             'ld.descricao as destino, ld.localizacao,qtdelugar, previsao, distancia '+
@@ -178,7 +178,7 @@ router.get('/ListaCaronasVolta/:destino&&:hora1&&:hora2&&:dateString',( req,res)
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
-            'where rota.id_usuario <> 1 and '+
+            'where rota.id_usuario <> '+ req.params.userID +' and'+
             'id_origem = '+ req.params.destino+
             ' and previsao >= "'+req.params.hora1+
             '" and previsao <= "'+ req.params.hora2+
@@ -228,8 +228,8 @@ router.post('/local/novo', (req, res) =>{
 
 router.post('/carona/novo', (req, res) =>{
   var sql = 'INSERT INTO carona (id_usuario, id_rota, id_local, status) VALUES ('+req.body.id_usuario+
-                                                                      ', '+req.body.id_rota+
-                                                                      ', '+req.body.id_local+', 0)';
+                                                                                ', '+req.body.id_rota+
+                                                                                ', '+req.body.id_local+', 0)';
   execSQLQuery(sql,res);
 })
 
