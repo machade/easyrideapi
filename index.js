@@ -10,11 +10,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const connection = mysql.createConnection({
-  // host     : 'localhost',
-  // port     : 3306,
-  // user     : 'root',
-  // password : 'mathe147',
-  // database : 'easyride'
+      // host     : 'localhost',
+    // port     : 3306,
+    // user     : 'root',
+    // password : 'mathe147',
+    // database : 'easyride'
   host     : 'sql10.freesqldatabase.com',
   port     : 3306,
   user     : 'sql10205490',
@@ -100,7 +100,7 @@ router.post('/login',login)
 
 // GET ------------------------------------------------------
 router.get('/dest_universidade', (req, res) =>{
-    execSQLQuery('SELECT * FROM local WHERE ID_USUARIO= 1', res);
+    execSQLQuery('SELECT * FROM local WHERE ID_USUARIO = 1', res);
 })
 
 router.get('/disponibilidade/:id_rota', (req, res) =>{
@@ -110,8 +110,8 @@ router.get('/disponibilidade/:id_rota', (req, res) =>{
               'ro.id = ' + req.params.id_rota, res);
 })
 
-router.get('/dest_usuario', (req, res) =>{
-  execSQLQuery('SELECT * FROM local WHERE ID_USUARIO = 2', res);
+router.get('/dest_usuario/:userID', (req, res) =>{
+  execSQLQuery('SELECT * FROM local WHERE ID_USUARIO = '+ req.params.userID, res);
 })
 
 router.get('/tipo_rota', (req, res) =>{
@@ -142,13 +142,13 @@ router.get('/caronas/:userID', (req, res) =>{
               'where status = 0 and ro.id_usuario = '+ req.params.userID, res);
 })
 
-router.get('/listarRota', (req, res) =>{
+router.get('/listarRota/:userID', (req, res) =>{
   var sql = 'SELECT rota.id, rota.id_usuario, id_TipoRota, tr.descricao as descricao_tipoRota, id_origem, lo.descricao as descricao_origem, id_destino, '+
             'ld.descricao as descricao_destino, qtdelugar, previsao, distancia,dataCriacao as dateString FROM rota '+
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
-            'where rota.id_usuario = 3';
+            'where rota.id_usuario = '+ req.params.userID;
 
   execSQLQuery(sql, res);
 })
@@ -206,7 +206,8 @@ router.get('/CaronaLocalizacoes/:id_local',( req,res) => {
 
 //POST------------------------------------------------------
 router.post('/rota/novo', (req, res) =>{
-  var sql = 'INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao, distancia,dataCriacao) VALUES (3,'+req.body.tipoRota+                                                                                    
+  var sql = 'INSERT INTO rota (id_usuario, id_TipoRota, id_origem, id_destino, qtdelugar, previsao, distancia,dataCriacao) VALUES ('+req.body.userID+
+                                                                                                            ','+req.body.tipoRota+                                                                                    
                                                                                                             ','+req.body.origem+
                                                                                                             ','+req.body.destino+
                                                                                                             ','+req.body.qtdeLugares+
@@ -220,7 +221,7 @@ router.post('/rota/novo', (req, res) =>{
 router.post('/local/novo', (req, res) =>{
   var sql = 'INSERT INTO local (descricao, localizacao, id_universidade, id_usuario) VALUES ("'+req.body.descricao+
                                                                                              '",point('+req.body.localizacao+')'+
-                                                                                             ', null, 2)';
+                                                                                             ', null,'+req.body.userID+')';
   execSQLQuery(sql,res);
 })
 
