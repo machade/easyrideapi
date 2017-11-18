@@ -10,11 +10,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const connection = mysql.createConnection({
-      // host     : 'localhost',
-    // port     : 3306,
-    // user     : 'root',
-    // password : 'mathe147',
-    // database : 'easyride'
+  // host     : 'localhost',
+  // port     : 3306,
+  // user     : 'root',
+  // password : 'mathe147',
+  // database : 'easyride'
   host     : 'sql10.freesqldatabase.com',
   port     : 3306,
   user     : 'sql10205490',
@@ -104,7 +104,7 @@ router.get('/dest_universidade', (req, res) =>{
 })
 
 router.get('/disponibilidade/:id_rota', (req, res) =>{
-  execSQLQuery('Select count(*) as ocupadas,ro.qtdelugar From easyride.carona '+ 
+  execSQLQuery('Select count(*) as ocupadas,ro.qtdelugar From carona '+ 
               'Inner Join rota as ro On ro.id = carona.id_rota '+
               'where carona.status = 1 and ' +
               'ro.id = ' + req.params.id_rota, res);
@@ -133,12 +133,12 @@ router.get('/caronas/:userID', (req, res) =>{
               'carona.id_local, lc.localizacao as LocalCarona, carona.status, '+
              ' ro.id_TipoRota,  '+
               'lo.localizacao as LocalizacaoOrigem, ld.localizacao as LocalizacaoDestino '+
-              'FROM easyride.carona '+
-              'INNER JOIN easyride.usuario AS usu ON carona.id_usuario = usu.id '+
-              'INNER JOIN easyride.rota AS ro ON carona.id_rota = ro.id '+
-              'INNER JOIN easyride.local AS lc ON carona.id_local = lc.id '+
-              'INNER JOIN easyride.local AS lo ON ro.id_origem = lo.id '+
-              'INNER JOIN easyride.local AS ld ON ro.id_destino = ld.id '+
+              'FROM carona '+
+              'INNER JOIN usuario AS usu ON carona.id_usuario = usu.id '+
+              'INNER JOIN rota AS ro ON carona.id_rota = ro.id '+
+              'INNER JOIN local AS lc ON carona.id_local = lc.id '+
+              'INNER JOIN local AS lo ON ro.id_origem = lo.id '+
+              'INNER JOIN local AS ld ON ro.id_destino = ld.id '+
               'where status = 0 and ro.id_usuario = '+ req.params.userID, res);
 })
 
@@ -157,7 +157,7 @@ router.get('/ListaCaronasIda/:destino&&:hora1&&:hora2&&:dateString&&:userID',( r
   var sql = 'SELECT rota.id, rota.id_usuario,usu.nome, id_TipoRota, tr.descricao as descricao_tipoRota, '+
             'id_origem, lo.descricao as origem, lo.localizacao, id_destino, '+
             'ld.descricao as destino,qtdelugar, previsao, distancia '+
-            'FROM easyride.rota '+
+            'FROM rota '+
             'INNER JOIN usuario as usu ON usu.id = rota.id_usuario '+
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
@@ -174,7 +174,7 @@ router.get('/ListaCaronasVolta/:destino&&:hora1&&:hora2&&:dateString&&:userID',(
   var sql = 'SELECT rota.id, rota.id_usuario,usu.nome, id_TipoRota, tr.descricao as descricao_tipoRota, '+
             'id_origem, lo.descricao as origem, id_destino, '+
             'ld.descricao as destino, ld.localizacao,qtdelugar, previsao, distancia '+
-            'FROM easyride.rota INNER JOIN usuario as usu ON usu.id = rota.id_usuario '+
+            'FROM rota INNER JOIN usuario as usu ON usu.id = rota.id_usuario '+
             'INNER JOIN local  as lo ON lo.id = rota.id_origem '+
             'INNER JOIN local  as ld ON ld.id = rota.id_destino '+
             'INNER JOIN tipo_rota as tr on tr.id = rota.id_TipoRota '+
