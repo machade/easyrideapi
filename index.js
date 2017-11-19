@@ -243,6 +243,11 @@ router.put('/carona/update', (req, res) =>{
                             ' WHERE id='+req.body.id;
   execSQLQuery(sql,res);
 })
+router.put('/dispositivo/update', (req, res) =>{
+  var sql = 'UPDATE usuario SET dispositivo = '+ req.body.dispositivo +
+                            ' WHERE id ='+req.body.userID;
+  execSQLQuery(sql,res);
+})
 
 router.put('/rota/update', (req, res) =>{
   var sql = 'UPDATE rota  SET id_TipoRota='+req.body.tipoRota+
