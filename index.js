@@ -103,8 +103,10 @@ router.get('/dadosUsuario/:userID', (req, res) =>{
   execSQLQuery('SELECT * FROM usuario WHERE id = ' + req.params.userID, res);
 })
 
-router.get('/dispositivo/:userID', (req, res) =>{
-  execSQLQuery('SELECT dispositivo FROM usuario WHERE id = ' + req.params.userID, res);
+router.get('/dispositivoFromRota/:id_rota', (req, res) =>{
+  execSQLQuery('SELECT usu.dispositivo FROM rota '+
+               ' inner join sql10205490.usuario as usu ON rota.id_usuario = usu.id ' +
+               ' where rota.id = '+ req.params.id_rota, res);
 })
 
 router.get('/dest_universidade', (req, res) =>{
