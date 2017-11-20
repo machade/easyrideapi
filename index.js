@@ -103,6 +103,10 @@ router.get('/dadosUsuario/:userID', (req, res) =>{
   execSQLQuery('SELECT * FROM usuario WHERE id = ' + req.params.userID, res);
 })
 
+router.get('/dispositvo/:userID', (req, res) =>{
+  execSQLQuery('SELECT dispositivo FROM usuario WHERE id = ' + req.params.userID, res);
+})
+
 router.get('/dest_universidade', (req, res) =>{
     execSQLQuery('SELECT * FROM local WHERE ID_USUARIO = 1', res);
 })
