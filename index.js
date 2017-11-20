@@ -109,6 +109,13 @@ router.get('/dispositivoFromRota/:id_rota', (req, res) =>{
                ' where rota.id = '+ req.params.id_rota, res);
 })
 
+router.get('/dispositivoFromCarona/:id_carona', (req, res) =>{
+  execSQLQuery('select usu.dispositivo, rota.previsao from carona' +
+               'inner join usuario as usu on carona.id_usuario = usu.id '+ 
+               'inner join rota on carona.id_rota = rota.id '+
+               'where carona.id =' +req.params.id_carona, res);
+})
+
 router.get('/dest_universidade', (req, res) =>{
     execSQLQuery('SELECT * FROM local WHERE ID_USUARIO = 1', res);
 })
